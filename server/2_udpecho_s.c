@@ -29,9 +29,9 @@ int main()
 	while(1)
 	{
 		memset(buffer,0,BUFFER);
-		recvfrom(server_fd,buffer,BUFFER,0,(struct sockaddr*)&server_addr,&addr_len);
+		recvfrom(client_fd,buffer,BUFFER,0,(struct sockaddr*)&server_addr,&addr_len);
 		printf("Received: %s",buffer);
-		sendto(server_fd,buffer,BUFFER,0,(struct sockaddr*)&server_addr,addr_len);
+		sendto(client_fd,buffer,BUFFER,0,(struct sockaddr*)&server_addr,addr_len);
 	}
 	close(server_fd);
 	return 0;
