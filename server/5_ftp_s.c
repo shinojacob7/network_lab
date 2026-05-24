@@ -34,15 +34,16 @@ int main()
 	if(strcmp(buffer,"GET")==0)
 	{
 		FILE *fp=fopen(filename,"r");
+		//memset(buffer,0,BUFFER);
 		if(fp==NULL)
 		{
 			write(client_fd,"ERROR",5);
 		}
 		else
 		{
-			 while(len=fgets(buffer,BUFFER,fp)>0)
+			 while(fgets(buffer,BUFFER,fp))
 			 {
-			 	write(client_fd,buffer,len);
+			 	write(client_fd,buffer,strlen(buffer));
 			 }
 			 fclose(fp);
 		}
@@ -50,8 +51,10 @@ int main()
 	if(strcmp(buffer,"PUT")==0)
 	{
 		FILE *fp=fopen(filename,"w");
-		while(len=read(client_fd,buffer,BUFFER)>0)
+		memset(buffer,0,BUFFER);
+		while(read(client_fd,buffer,BUFFER))
 		{
+			printf("%s\n",buffer);
 			fputs(buffer,fp);
 		}
 		fclose(fp);
